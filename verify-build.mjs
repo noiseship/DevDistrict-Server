@@ -1,0 +1,15 @@
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {Script} from 'node:vm';
+import {config} from './public-config.js';
+const html = readFileSync('dist/index.html', 'utf8');
+const match = html.match(/<script id="application-bundle" src="\.\/([^" ]+)" integrity="([^"]+)"/);
+if (!match) throw Error('Missing classic application script');
+const bytes = readFileSync('dist/' + match[1]);
+if ('sha384-' + createHash('sha384').update(bytes).digest('base64') !== match[2]) throw Error('Integrity mismatch');
+const js = bytes.toString('utf8');
+if (!html.includes('/runtime-config.js')) throw Error('Missing server configuration loader');
+if (js.includes(config.url)) throw Error('Browser must not connect directly to Supabase');
+new Script(js);
+for (const match of html.matchAll(/href="\.\/(assets\/[^" ]+\.css)"/g)) readFileSync('dist/' + match[1]);
+console.log('BUILD OK: classic script, integrity, CSS and configuration verified.');

@@ -1,0 +1,28 @@
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dev District</title><link rel="stylesheet" href="./style.css"></head><body><header><strong>◈ DEV DISTRICT 3.0</strong><span id="status">Загрузка приложения…</span></header><main><section id="login" class="auth-shell"><div class="auth-intro"><span class="eyebrow">DEV DISTRICT / ONLINE</span><h1>Твой путь<br>в IT начинается<br><em>здесь.</em></h1><p>Создай своего разработчика, выполняй заказы и соревнуйся с друзьями в общем мире.</p><div class="terminal"><div>● ● ● <span>developer.js</span></div><pre><code>const career = new Developer();
+career.learn();
+career.build();
+career.levelUp();</code></pre></div><div class="auth-features"><span>01 / Общий мир</span><span>02 / Прокачка</span><span>03 / Рейтинг</span></div></div><div class="auth-panel"><div class="eyebrow">ЛИЧНЫЙ АККАУНТ</div><h2 id="auth-title">С возвращением</h2><p id="auth-subtitle">Войди, чтобы продолжить игру.</p><div class="auth-tabs" role="group" aria-label="Режим авторизации"><button type="button" data-mode="signin" disabled aria-pressed="true">Вход</button><button type="button" data-mode="signup" disabled aria-pressed="false">Регистрация</button></div><form id="auth-form"><div id="nick-field" hidden><label for="nick">Никнейм</label><input id="nick" minlength="3" maxlength="20" placeholder="Developer" autocomplete="nickname"></div><div id="email-field"><label for="email">Электронная почта</label><input id="email" type="email" required placeholder="name@example.com" autocomplete="email"></div><div id="password-field"><label for="password">Пароль</label><div class="password-wrap"><input id="password" type="password" required minlength="6" placeholder="Минимум 6 символов" autocomplete="current-password"><button type="button" id="show-password" disabled aria-label="Показать пароль">Показать</button></div></div><button id="auth-submit" disabled type="submit">Войти в игру →</button><div id="auth-message" role="status" aria-live="polite" hidden></div></form><button type="button" id="reload-page" onclick="location.reload()" hidden>Обновить страницу</button><noscript><p>Для игры нужно включить JavaScript в браузере.</p></noscript><div class="auth-separator">или</div><button type="button" id="guest-mode" disabled class="guest-button">Играть гостем</button><p class="auth-footnote">Гостевой прогресс доступен только в этом браузере.</p></div></section><section id="game" hidden><div class="stats" id="stats"></div><div class="layout"><article><div class="top"><h2>IT-офис / общий мир</h2><span id="online"></span></div><canvas id="map" width="800" height="480" tabindex="0"></canvas><p>WASD / стрелки или клик по карте. Подойди к станции и нажми E.</p><div class="controls"><button data-dir="0,-1">↑</button><button data-dir="-1,0">←</button><button data-dir="0,1">↓</button><button data-dir="1,0">→</button><button id="act">E · Действие</button></div><div id="task"></div></article><aside><h2>🏆 Рейтинг</h2><div id="rank"></div><h2>Станции</h2><p>💻 Заказы — деньги и опыт<br>📚 Обучение — опыт<br>☕ Отдых — энергия<br>🛠 Улучшение — оборудование</p><button id="logout">Выйти</button></aside></div></section><p id="notice" role="status"></p><p><a href="/connection-check.html" style="color:#5de2b7">Проверка соединения</a></p></main><dialog id="activity"><div class="dialog-top"><h2 id="activity-title"></h2><button id="close-activity" type="button" aria-label="Закрыть">×</button></div><div id="activity-content"></div></dialog><script>
+(function () {
+  function startupError(message) {
+    document.getElementById('status').textContent = 'Ошибка запуска приложения';
+    var box = document.getElementById('auth-message');
+    box.textContent = message;
+    box.hidden = false;
+    document.getElementById('reload-page').hidden = false;
+  }
+  window.applicationLoadFailed = function () {
+    document.documentElement.dataset.startupError = 'true';
+    startupError('Не удалось загрузить полный файл игры. Проверьте загрузку из другой сети. Если ошибка повторится, пришлите сообщение из вкладки Сеть для файла assets/index-*.js.');
+  };
+  window.addEventListener('error', function (event) {
+    if (!document.documentElement.dataset.appStarted && event.message) {
+      startupError('Ошибка браузера при запуске: ' + event.message);
+      document.documentElement.dataset.startupError = 'true';
+    }
+  });
+  setTimeout(function () {
+    if (document.documentElement.dataset.appStarted || document.documentElement.dataset.startupError) return;
+    startupError('Браузер не запустил код игры. Откройте страницу в приватном окне и сообщите владельцу сайта результат.');
+  }, 30000);
+})();
+</script><script type="module" src="./src.js"></script></body></html>

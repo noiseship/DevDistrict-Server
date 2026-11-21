@@ -1,0 +1,22 @@
+{
+  "name": "dev-district",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "vite build && node inline-build.mjs && node verify-build.mjs",
+    "preview": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.49.4"
+  },
+  "devDependencies": {
+    "vite": "5.4.19"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
